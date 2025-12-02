@@ -14,11 +14,12 @@ const slides: Slide[] = [
   {
     id: "cover",
     title: "AI × Investment Banking",
-    subtitle: "A visual tour of how AI will reshape junior roles",
+    subtitle: "How AI Will Change Investment Banking Careers, Especially at the Junior Level",
     bullets: [
-      "Imagine your first years in banking with an AI copilot at your side.",
-      "We’ll compare today’s workflow with an AI-accelerated future.",
-      "Use this deck as a story you can talk through in 5–7 minutes."
+      "Luke Rosenthal",
+      "Professor, Aida M. Parrondo",
+      "November 22, 2025",
+      "Strategic Management 4720"
     ],
     kind: "cover"
   },
@@ -208,16 +209,17 @@ export default function Page() {
             >
               <div
                 className={`grid gap-10 md:gap-14 ${
-                  isHeroLike ? "md:grid-cols-[1.3fr_minmax(0,1fr)]" : "md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]"
+                  slide.kind === "cover" 
+                    ? "md:grid-cols-1" 
+                    : isHeroLike 
+                    ? "md:grid-cols-[1.3fr_minmax(0,1fr)]" 
+                    : "md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]"
                 } items-center transition-all duration-700 ${
                   isActive ? "scale-[1.02] opacity-100" : "scale-[0.97] opacity-70"
                 }`}
               >
                 {/* Text side */}
-                <div className="space-y-6 md:space-y-8">
-                  <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-accent/70">
-                    Slide {index + 1} of {slides.length}
-                  </p>
+                <div className={`space-y-6 md:space-y-8 ${slide.kind === "cover" ? "text-center max-w-4xl mx-auto" : ""}`}>
                   <h1
                     className={`font-semibold leading-tight text-4xl md:text-5xl lg:text-6xl text-white ${
                       isHeroLike ? "animate-slide-right" : "animate-fade-up"
@@ -231,47 +233,49 @@ export default function Page() {
                       {slide.subtitle}
                     </p>
                   )}
-                  <ul className="mt-4 space-y-3 md:space-y-4 text-xl md:text-2xl text-slate-100">
-                    {slide.bullets.map((bullet, i) => (
-                      <li
-                        key={bullet}
-                        className={`flex gap-3 opacity-80 ${
-                          isActive ? "animate-fade-up" : ""
-                        }`}
-                        style={
-                          isActive
-                            ? { animationDelay: `${0.18 + i * 0.08}s` }
-                            : undefined
-                        }
-                      >
-                        <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-accent shadow-accent-glow" />
-                        <span className="leading-snug">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {slide.kind === "cover" ? (
+                    <div className="mt-8 space-y-4 md:space-y-5">
+                      {slide.bullets.map((bullet, i) => (
+                        <div
+                          key={bullet}
+                          className={`text-center text-lg md:text-xl lg:text-2xl text-slate-200 ${
+                            isActive ? "animate-fade-up" : ""
+                          }`}
+                          style={
+                            isActive
+                              ? { animationDelay: `${0.25 + i * 0.1}s` }
+                              : undefined
+                          }
+                        >
+                          {bullet}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <ul className="mt-4 space-y-3 md:space-y-4 text-xl md:text-2xl text-slate-100">
+                      {slide.bullets.map((bullet, i) => (
+                        <li
+                          key={bullet}
+                          className={`flex gap-3 opacity-80 ${
+                            isActive ? "animate-fade-up" : ""
+                          }`}
+                          style={
+                            isActive
+                              ? { animationDelay: `${0.18 + i * 0.08}s` }
+                              : undefined
+                          }
+                        >
+                          <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-accent shadow-accent-glow" />
+                          <span className="leading-snug">{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 {/* Visual side */}
+                {slide.kind !== "cover" && (
                 <div className="relative">
-                  {slide.id === "cover" && (
-                    <div className="mx-auto max-w-md rounded-3xl border border-slate-700/70 bg-gradient-to-br from-slate-900/70 via-slate-900/40 to-slate-800/60 p-8 shadow-2xl shadow-slate-950/80 animate-pulse-glow">
-                      <div className="mb-6 flex items-center gap-3 text-sm text-slate-300">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent/20 text-accent shadow-accent-glow">
-                          AI
-                        </span>
-                        <span>“Slide Deck Mode” — built for screen recording.</span>
-                      </div>
-                      <div className="space-y-4">
-                        <div className="h-8 w-40 rounded-full bg-slate-700/80" />
-                        <div className="h-8 w-32 rounded-full bg-slate-800/90" />
-                        <div className="h-20 w-full rounded-2xl bg-gradient-to-r from-accent/40 via-accent/10 to-transparent" />
-                        <p className="text-xs text-slate-400">
-                          Image placeholder: abstract city skyline with data streams and banking icons.
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
                   {slide.id === "hero" && (
                     <div className="relative mx-auto max-w-md">
                       <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-accent/40 via-accent/5 to-transparent blur-2xl opacity-60" />
@@ -333,6 +337,7 @@ export default function Page() {
                     />
                   )}
                 </div>
+                )}
               </div>
             </section>
           );
@@ -366,16 +371,6 @@ export default function Page() {
           })}
         </div>
       </nav>
-
-      <div className="pointer-events-none fixed inset-x-0 bottom-4 flex justify-center px-4">
-        <div className="inline-flex items-center gap-3 rounded-full bg-black/60 px-4 py-2 text-xs md:text-sm text-slate-200 backdrop-blur shadow-accent-glow animate-slow-float">
-          <span className="h-2 w-2 rounded-full bg-accent shadow-accent-glow" />
-          <span>
-            Use <span className="font-semibold">Arrow Up/Down</span> or{" "}
-            <span className="font-semibold">Page Up/Page Down</span> to move between slides.
-          </span>
-        </div>
-      </div>
     </main>
   );
 }
