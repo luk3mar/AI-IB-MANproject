@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 type Slide = {
   id: string;
@@ -303,6 +304,23 @@ export default function Page() {
                     </div>
                   )}
 
+                  {slide.id === "today-junior-work" && (
+                    <div className="mx-auto max-w-md">
+                      <div className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-950/80 shadow-2xl shadow-slate-950/80">
+                        <div className={`relative ${isActive ? "animate-fade-up" : ""}`} style={isActive ? { animationDelay: "0.2s" } : undefined}>
+                          <Image
+                            src="/jrbankers.png"
+                            alt="Junior investment bankers in office"
+                            width={600}
+                            height={400}
+                            className="w-full h-auto object-cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {slide.id === "ai-fit" && (
                     <AIPatternVisual isActive={isActive} />
                   )}
@@ -316,10 +334,20 @@ export default function Page() {
                   )}
 
                   {slide.id === "human-judgment" && (
-                    <ImagePlaceholder
-                      label="Image placeholder: two people in a meeting room, with subtle data overlay in the background."
-                      tag="Human relationships"
-                    />
+                    <div className="mx-auto max-w-md">
+                      <div className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-950/80 shadow-2xl shadow-slate-950/80">
+                        <div className={`relative ${isActive ? "animate-fade-up" : ""}`} style={isActive ? { animationDelay: "0.2s" } : undefined}>
+                          <Image
+                            src="/handshake.png"
+                            alt="Business handshake representing human relationships and trust"
+                            width={600}
+                            height={400}
+                            className="w-full h-auto object-cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </div>
                   )}
 
                   {slide.id === "role-evolution" && (
@@ -331,10 +359,20 @@ export default function Page() {
                   )}
 
                   {slide.id === "final-takeaways" && (
-                    <ImagePlaceholder
-                      label="Closing image placeholder: city skyline fading into a network of data lines."
-                      tag="Closing visual"
-                    />
+                    <div className="mx-auto max-w-md">
+                      <div className="relative overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-950/80 shadow-2xl shadow-slate-950/80">
+                        <div className={`relative ${isActive ? "animate-fade-up" : ""}`} style={isActive ? { animationDelay: "0.2s" } : undefined}>
+                          <Image
+                            src="/jpmtower.jpg"
+                            alt="JP Morgan Tower city skyline"
+                            width={600}
+                            height={400}
+                            className="w-full h-auto object-cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
                 )}
