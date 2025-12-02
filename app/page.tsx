@@ -67,8 +67,20 @@ const slides: Slide[] = [
     ]
   },
   {
+    id: "risk-no-ai",
+    title: "The Risk of Not Adopting AI",
+    subtitle: "Why Junior Bankers Can't Afford to Fall Behind",
+    bullets: [
+      "Peers using AI will complete models and pitchbooks 3–5x faster than you.",
+      "You'll spend more hours on manual work while others focus on strategy and client relationships.",
+      "Senior bankers will notice who delivers faster, higher-quality work — and who doesn't.",
+      "Career progression slows: promotions go to those who add more value with AI assistance.",
+      "The gap widens over time: early AI adopters build compounding advantages."
+    ]
+  },
+  {
     id: "human-judgment",
-    title: "What AI Can’t Replace",
+    title: "What AI Can't Replace",
     subtitle: "Why Human Bankers Still Matter",
     bullets: [
       "Building trust and long-term relationships with clients and senior executives.",
@@ -293,6 +305,10 @@ export default function Page() {
 
                   {slide.id === "tasks-automation" && (
                     <WorkflowPipelineVisual isActive={isActive} />
+                  )}
+
+                  {slide.id === "risk-no-ai" && (
+                    <RiskWarningVisual isActive={isActive} />
                   )}
 
                   {slide.id === "human-judgment" && (
@@ -655,6 +671,125 @@ const SkillsRadarVisual = ({ isActive }: Activeable) => {
       </div>
       <p className="text-xs text-slate-400">
         Show how the same analyst role leans much harder into AI, data, and strategic communication.
+      </p>
+    </div>
+  );
+};
+
+const RiskWarningVisual = ({ isActive }: Activeable) => {
+  const metrics = [
+    { label: "Model completion time", withoutAI: 8, withAI: 2, unit: "hours" },
+    { label: "Pitchbook drafts", withoutAI: 1, withAI: 3, unit: "per day" },
+    { label: "Research summaries", withoutAI: 2, withAI: 8, unit: "per hour" },
+    { label: "Client-ready quality", withoutAI: 60, withAI: 95, unit: "%" }
+  ];
+
+  return (
+    <div className="mx-auto flex max-w-md flex-col gap-3">
+      <div className="relative overflow-hidden rounded-3xl border border-red-500/50 bg-gradient-to-br from-slate-950/90 via-red-950/20 to-slate-950/90 p-6 shadow-2xl shadow-red-950/50">
+        {/* Warning glow effect */}
+        <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-red-500/10 blur-2xl animate-pulse-glow" />
+        
+        <div className="relative">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-red-500 shadow-red-glow animate-pulse" />
+              <span className="text-[11px] uppercase tracking-[0.18em] text-red-400 font-semibold">
+                Competitive Disadvantage
+              </span>
+            </div>
+            <span className="text-[10px] text-slate-400">Without AI</span>
+          </div>
+
+          {/* Comparison bars */}
+          <div className="space-y-5">
+            {metrics.map((metric, idx) => (
+              <div key={metric.label} className="space-y-2.5">
+                <div className="flex items-center justify-between text-[12px] font-medium text-slate-200">
+                  <span>{metric.label}</span>
+                </div>
+                
+                {/* Without AI bar - slow, red-tinted */}
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-1 h-5 overflow-hidden rounded-full bg-slate-800/80 border border-red-500/30">
+                    <div
+                      className={`h-full rounded-full bg-gradient-to-r from-red-600/60 via-red-500/40 to-red-600/60 ${
+                        isActive ? "animate-bar-fill" : ""
+                      }`}
+                      style={
+                        isActive
+                          ? {
+                              animationDelay: `${0.1 + idx * 0.15}s`,
+                              animationFillMode: "forwards",
+                              animationDuration: "1.2s"
+                            }
+                          : { width: `${(metric.withoutAI / 10) * 100}%` }
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center gap-1 min-w-[80px] justify-end">
+                    <span className="text-[14px] font-bold text-red-400 drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]">
+                      {metric.withoutAI}
+                    </span>
+                    <span className="text-[11px] text-red-300/80">
+                      {metric.unit === "%" ? "%" : metric.unit}
+                    </span>
+                  </div>
+                </div>
+
+                {/* With AI bar - fast, blue/green */}
+                <div className="flex items-center gap-3">
+                  <div className="relative flex-1 h-5 overflow-hidden rounded-full bg-slate-800/80 border border-accent/50 shadow-accent-glow">
+                    <div
+                      className={`h-full rounded-full bg-gradient-to-r from-accent/90 via-cyan-400/80 to-emerald-400/70 ${
+                        isActive ? "animate-bar-fill" : ""
+                      }`}
+                      style={
+                        isActive
+                          ? {
+                              animationDelay: `${0.2 + idx * 0.15}s`,
+                              animationFillMode: "forwards",
+                              animationDuration: "0.6s"
+                            }
+                          : { width: `${(metric.withAI / 10) * 100}%` }
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center gap-1 min-w-[80px] justify-end">
+                    <span className="text-[14px] font-bold text-accent drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]">
+                      {metric.withAI}
+                    </span>
+                    <span className="text-[11px] text-cyan-300/80">
+                      {metric.unit === "%" ? "%" : metric.unit}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between text-[10px] mt-1">
+                  <span className="text-red-400 font-medium">Without AI</span>
+                  <span className="text-accent font-semibold">With AI</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Warning message */}
+          <div className={`mt-6 rounded-2xl border border-red-500/50 bg-red-950/40 p-4 backdrop-blur-sm ${
+            isActive ? "animate-fade-up" : ""
+          }`} style={isActive ? { animationDelay: "0.8s" } : undefined}>
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 h-5 w-5 flex-shrink-0 rounded-full bg-red-500/30 flex items-center justify-center">
+                <span className="text-xs text-red-400">⚠</span>
+              </div>
+              <div className="text-[11px] text-red-200 leading-relaxed">
+                <span className="font-semibold">The gap widens over time.</span> Analysts using AI build compounding advantages: faster work → more client exposure → better performance reviews → faster promotions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p className="text-xs text-slate-400">
+        Visual comparison: side-by-side metrics showing how AI users dramatically outperform those who don't adopt it.
       </p>
     </div>
   );

@@ -13,7 +13,8 @@ const config: Config = {
         accent: "#38bdf8"
       },
       boxShadow: {
-        "accent-glow": "0 0 55px rgba(56, 189, 248, 0.8)"
+        "accent-glow": "0 0 55px rgba(56, 189, 248, 0.8)",
+        "red-glow": "0 0 20px rgba(239, 68, 68, 0.6)"
       },
       keyframes: {
         "slow-float": {
